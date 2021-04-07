@@ -8,17 +8,20 @@ public class DrawPanel extends JPanel implements Runnable {
     DrawPanel(Dimension windowSize, int nCircle) {
         this.windowSize = windowSize;
 
+        // Pozwala na uwidocznienie warst leżących pod tym JPanel
+        setOpaque(false);
+        setPreferredSize(windowSize);
         for(int i=0; i<nCircle; i++)
             addCircle();
-
+        setLayout(new BorderLayout());
     }
 
     void addCircle() {
         int size = rand.nextInt(80) + 20;
         int x = rand.nextInt(windowSize.width - size);
         int y = rand.nextInt(windowSize.height - size);
-        int velX = rand.nextInt(15);
-        int velY = rand.nextInt(15);
+        int velX = rand.nextInt(7);
+        int velY = rand.nextInt(7);
         Color color = new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
         circleList.add(new Circle(x, y, size, velX, velY, color, windowSize));
     }
@@ -40,31 +43,14 @@ public class DrawPanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        while(true) {
-            long start = System.nanoTime();
+		for(Circle circle : circleList)
+			circle.move();
 
-            for(Circle circle : circleList)
-                circle.move();
-
-            repaint();
-
-            long end = System.nanoTime();
-            long wait = (long) (frameRateTime - (end-start) / 1e6);
-            if(wait < 0)
-                wait = 0;
-
-            try {
-                Thread.sleep(wait);
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+		repaint();
     }
 
     private Dimension windowSize;
     private List<Circle> circleList = new ArrayList<Circle>();
     private Random rand = new Random();
-    private long frameRateTime = 1000/60;
     private boolean setSize = false;
 }
