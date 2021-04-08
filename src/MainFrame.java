@@ -22,7 +22,7 @@ public class MainFrame extends JFrame {
             @Override
             public void run() {
                 MainFrame frame = new MainFrame("turbo kółka!!!");
-                DrawPanel panel = new DrawPanel(frame.getSize(), 100);
+                DrawPanel panel = new DrawPanel(frame.getSize(), 1000);
                 frame.add(panel);
 
                 new Thread(panel).start();
