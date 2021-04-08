@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainFrame frame = new MainFrame("turbo kółka!!!", 10);
+                MainFrame frame = new MainFrame("turbo kółka!!!", 100);
             }
         });
     }
