@@ -17,11 +17,11 @@ public class DrawPanel extends JPanel implements Runnable {
     }
 
     void addCircle() {
-        int size = rand.nextInt(80) + 20;
+        int size = rand.nextInt(20) + 5;
         int x = rand.nextInt(windowSize.width - size);
         int y = rand.nextInt(windowSize.height - size);
-        int velX = rand.nextInt(7);
-        int velY = rand.nextInt(7);
+        int velX = rand.nextInt(7) + 1;
+        int velY = rand.nextInt(7) + 1;
         Color color = new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
         circleList.add(new Circle(x, y, size, velX, velY, color, windowSize));
     }
@@ -43,10 +43,11 @@ public class DrawPanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-		for(Circle circle : circleList)
-			circle.move();
+        for(Circle circle : circleList)
+            circle.move();
 
-		repaint();
+        repaint();
+        System.out.println(Thread.currentThread().getName());
     }
 
     private Dimension windowSize;
