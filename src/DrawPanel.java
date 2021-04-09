@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.Random;
 
 public class DrawPanel extends JPanel implements Runnable {
-    DrawPanel(Dimension windowSize, int nCircle) {
+    DrawPanel(Dimension windowSize, int nCircle, int framesPerSecond) {
         this.windowSize = windowSize;
+        this.frameRateTime = 1000/framesPerSecond;
 
         for(int i=0; i<nCircle; i++)
             addCircle();
-
     }
 
     void addCircle() {
-        int size = rand.nextInt(80) + 20;
+        int size = rand.nextInt(20) + 5;
         int x = rand.nextInt(windowSize.width - size);
         int y = rand.nextInt(windowSize.height - size);
         int velX = rand.nextInt(7) + 1;
@@ -47,6 +47,7 @@ public class DrawPanel extends JPanel implements Runnable {
                 circle.move();
 
             repaint();
+            System.out.println(Thread.currentThread().getName());
 
             long end = System.nanoTime();
             long wait = (long) (frameRateTime - (end-start) / 1e6);
@@ -65,6 +66,6 @@ public class DrawPanel extends JPanel implements Runnable {
     private Dimension windowSize;
     private List<Circle> circleList = new ArrayList<Circle>();
     private Random rand = new Random();
-    private long frameRateTime = 1000/60;
+    private long frameRateTime;
     private boolean setSize = false;
 }

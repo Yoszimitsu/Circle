@@ -1,11 +1,27 @@
 import javax.swing.*;
+import java.util.Scanner;
 
 public class MainFrame extends JFrame {
-    MainFrame() {
-        super();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
-        setResizable(false);
+
+    public static void main(String[] args) {
+        System.out.println("SINGLE THREAD");
+
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("enter # of circles");
+        int nCircle = keyboard.nextInt();
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainFrame frame = new MainFrame("SINGLE THREAD");
+                DrawPanel panel = new DrawPanel(frame.getSize(), nCircle,120);
+                frame.add(panel);
+
+                new Thread(panel).start();
+
+                frame.setVisible(true);
+            }
+        });
     }
 
     MainFrame(String title) {
@@ -15,20 +31,4 @@ public class MainFrame extends JFrame {
         setResizable(false);
     }
 
-
-    public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MainFrame frame = new MainFrame("turbo kółka!!!");
-                DrawPanel panel = new DrawPanel(frame.getSize(), 1000);
-                frame.add(panel);
-
-                new Thread(panel).start();
-
-                frame.setVisible(true);
-            }
-        });
-    }
 }
